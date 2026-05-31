@@ -673,12 +673,203 @@ Total: 30 comprehensive files covering all aspects of NASM assembly!
 - ✅ Created quick reference guide
 - ⏳ Topics 4-20 planned
 
-**Coming Soon:**
-- Topic 4: Flags & Comparisons
-- Topic 5: Conditional Jumps
-- Topic 6: Loops
-- More Q&A based on common questions
-- Code examples repository
+---
+
+## 📚 `/topics` - OS Internals (Level 9)
+
+Advanced topics covering how operating system primitives work at the assembly level.
+
+### **topic-21-memory-internals.md** ✅ Completed
+**Level:** OS Internals (Week 15)
+**What You'll Learn:**
+- How brk() extends the heap (program break)
+- How mmap() allocates independent memory regions
+- Implementing sbrk() in assembly
+- malloc chunk structure (headers, flags, size encoding)
+- Free list strategies (fast bins, small bins, large bins)
+- Chunk coalescing to fight fragmentation
+- Demand paging and page faults on first access
+- Thread-local arenas for multi-threaded allocation
+- Memory alignment guarantees
+- Debugging: use-after-free detection, double-free detection
+
+**Key Concepts:** brk, mmap, munmap, mprotect, page faults, free lists, chunk headers, COW
+
+---
+
+### **topic-22-process-internals.md** ✅ Completed
+**Level:** OS Internals (Week 15-16)
+**What You'll Learn:**
+- Process virtual address space layout
+- fork() syscall and what the kernel duplicates
+- Copy-on-Write (COW) mechanism in detail
+- clone() — the real syscall behind fork() and threads
+- execve() — how it destroys and rebuilds address space
+- Initial stack after execve (argc, argv, envp, auxiliary vector)
+- Signal installation and delivery mechanism
+- Process groups, sessions, and daemons
+- Pipes for inter-process communication
+- Implementing shell pipelines (ls | wc -l) in assembly
+
+**Key Concepts:** fork, clone, execve, COW, signals, pipes, dup2, wait4, process groups
+
+---
+
+### **topic-23-virtual-memory.md** ✅ Completed
+**Level:** OS Internals (Week 16)
+**What You'll Learn:**
+- Why virtual memory exists (isolation, overcommit, sharing)
+- 4-level page table structure (PML4/PDPT/PD/PT)
+- Page Table Entry (PTE) bit fields (Present, R/W, U/S, NX, Dirty, Accessed)
+- Complete virtual address translation walkthrough
+- TLB: sizes, hit rates, flush events, PCID optimization
+- Page sizes: 4KB standard, 2MB huge pages, 1GB gigantic pages
+- Using huge pages via mmap (MAP_HUGETLB)
+- Page fault types and kernel handler logic
+- Memory protection with mprotect()
+- Guard pages for overflow detection
+- ASLR (Address Space Layout Randomization)
+- Shared memory between processes
+- Memory-mapped files (file as an array)
+
+**Key Concepts:** page tables, TLB, page faults, huge pages, mprotect, ASLR, shared memory
+
+---
+
+### **topic-24-io-internals.md** ✅ Completed
+**Level:** OS Internals (Week 16-17)
+**What You'll Learn:**
+- Complete write() syscall path (user→kernel→VFS→driver→hardware)
+- What happens inside the SYSCALL instruction (MSRs, ring transition)
+- File descriptor table structure (fd → file struct → operations)
+- Terminal I/O path: kernel TTY → line discipline → PTY → terminal emulator
+- Canonical vs raw terminal mode (ioctl TCSETS)
+- User-space buffering (why printf doesn't write immediately)
+- Implementing buffered I/O in assembly
+- Implementing printf-like formatting (%d, %s, %x, %c)
+- The read() path: keyboard IRQ → input subsystem → TTY → process
+- Blocking vs non-blocking I/O (O_NONBLOCK, fcntl)
+- poll() for monitoring multiple file descriptors
+- Shell redirection (dup2 mechanics)
+- ANSI escape sequences for terminal graphics
+- Direct framebuffer access (/dev/fb0)
+- writev() scatter/gather I/O
+
+**Key Concepts:** write, read, ioctl, file descriptors, buffering, TTY, poll, dup2, framebuffer
+
+---
+
+### **topic-25-elf-format.md** ✅ Completed
+**Level:** OS Internals (Week 17)
+**What You'll Learn:**
+- ELF file structure overview (header, program headers, sections)
+- ELF header fields (64 bytes): magic, type, machine, entry point
+- Crafting a minimal ELF executable by hand (~170 bytes)
+- Object files (.o): sections, symbol table, relocations
+- Relocation types (R_X86_64_64, R_X86_64_PC32, R_X86_64_PLT32)
+- What the linker does: symbol resolution, section merging, address assignment
+- Linker scripts and custom memory layouts
+- Segments vs sections (runtime loading vs link-time organization)
+- Program header types (PT_LOAD, PT_DYNAMIC, PT_INTERP)
+- Dynamic linking: GOT, PLT, lazy binding, dl_runtime_resolve
+- Position-Independent Code (PIC/PIE) for ASLR
+- How the kernel loads an ELF during execve()
+- Symbol tables and visibility (global, local, weak)
+- DWARF debug information
+- ELF inspection tools (readelf, objdump, nm, strip)
+
+**Key Concepts:** ELF, sections, segments, relocations, GOT, PLT, PIE, dynamic linking
+
+---
+
+### **topic-26-interrupts.md** ✅ Completed
+**Level:** OS Internals (Week 17-18)
+**What You'll Learn:**
+- Interrupt classification: exceptions, hardware IRQs, software interrupts
+- Exception subtypes: faults (retried), traps (next instr), aborts
+- IDT structure: 256 entries × 16 bytes, gate descriptors
+- Interrupt gate vs trap gate
+- Complete exception table (vectors 0-31)
+- Page fault (#PF) step-by-step: what CPU pushes, error code bits, CR2
+- General Protection Fault (#GP) causes
+- Hardware interrupt delivery: device → I/O APIC → Local APIC → CPU
+- Timer interrupt and how preemptive scheduling works
+- Debugger breakpoints: INT 3 (0xCC) and how GDB uses them
+- Hardware debug registers (DR0-DR7) for watchpoints
+- SYSCALL instruction vs INT 0x80: MSR-based fast path
+- Why RCX and R11 are clobbered by syscall
+- vDSO: kernel-mapped shared library for fast "syscalls" without ring transition
+- Interrupt latency and real-time considerations
+- Catching SIGSEGV and SIGFPE: recovery in signal handlers
+
+**Key Concepts:** IDT, exceptions, IRQs, page fault, timer, INT 3, SYSCALL, vDSO
+
+---
+
+### **topic-27-context-switching.md** ✅ Completed
+**Level:** OS Internals (Week 18)
+**What You'll Learn:**
+- Complete process context: all state that defines execution
+- Voluntary switch (blocking on I/O) vs involuntary (timer preemption)
+- The switch_to assembly: push callee-saved, swap RSP, pop, RET
+- What's on each process's kernel stack when switched out
+- FPU/SSE/AVX state: lazy vs eager switching, XSAVE/XRSTOR
+- Thread switching vs process switching (no CR3 change = much faster)
+- Thread Local Storage (TLS) via FS segment register
+- CFS scheduler: vruntime, red-black tree, weight-based time slices
+- Process states (RUNNING, SLEEPING, ZOMBIE, STOPPED)
+- Measuring context switch cost (pipe ping-pong benchmark)
+- CPU affinity: sched_setaffinity, pinning to cores
+- NUMA awareness
+- User-space context switching: implementing coroutines in assembly
+
+**Key Concepts:** switch_to, kernel stack, CR3, XSAVE, CFS, coroutines, TLS, CPU affinity
+
+---
+
+### **topic-28-synchronization.md** ✅ Completed
+**Level:** OS Internals (Week 18)
+**What You'll Learn:**
+- x86-64 memory model (Total Store Order)
+- Memory barriers: MFENCE, SFENCE, LFENCE
+- LOCK prefix: makes read-modify-write atomic + full barrier
+- Atomic operations: LOCK INC, LOCK ADD, XCHG, LOCK XADD
+- CMPXCHG (Compare-and-Swap): the fundamental CAS operation
+- CMPXCHG16B for 128-bit atomic operations
+- Spinlock implementations: test-and-set, ticket lock (fair)
+- PAUSE instruction: why it matters in spin loops
+- Futex syscall: FUTEX_WAIT, FUTEX_WAKE
+- Implementing a full mutex using futex (3-state: unlocked/locked/contended)
+- Lock-free Treiber stack with CAS
+- ABA problem and solutions (version counter with CMPXCHG16B)
+- Exponential backoff for contention
+- Read-write locks
+- Semaphores with futex
+- Condition variables
+- Single-producer single-consumer lock-free ring buffer
+- Complete thread-safe counter example with clone()
+
+**Key Concepts:** LOCK, CMPXCHG, spinlock, futex, lock-free, CAS, ring buffer, memory ordering
+
+---
+
+## 📚 `/qna` - Supplementary Deep Dives (OS Internals)
+
+### **how-malloc-works.md** ✅ Completed
+**Question:** How does malloc() actually work from application to physical memory?
+**Topics:** chunk headers, free list bins, brk vs mmap decision, why free doesn't return memory, common bugs
+
+### **how-fork-works.md** ✅ Completed
+**Question:** How does fork() create a process copy without copying all memory?
+**Topics:** Copy-on-Write mechanism, page table duplication, COW page fault, return value magic, vfork
+
+### **virtual-memory-explained.md** ✅ Completed
+**Question:** What is a virtual address and how is it translated to physical?
+**Topics:** 4-level translation, TLB caching, page fault types, /proc/self/maps, isolation
+
+### **signals-and-traps.md** ✅ Completed
+**Question:** How do signals get delivered? Can I catch SIGSEGV?
+**Topics:** signal vs exception vs interrupt, kernel stack modification, async-signal-safety, SIGSEGV recovery
 
 ---
 
@@ -689,6 +880,7 @@ Total: 30 comprehensive files covering all aspects of NASM assembly!
 3. **Reference:** Keep QUICK_REFERENCE.md open while coding
 4. **Deep Dives:** Read Q&A files for thorough explanations
 5. **Practice:** Complete exercises in each topic file
+6. **OS Internals:** Topics 21-28 explain how the OS works under the hood at assembly level
 
 ---
 
@@ -700,18 +892,51 @@ Foundation (Weeks 1-2):
 [✅] Topic 2: Registers & Data Types
 [✅] Topic 3: Basic Instructions
 
-Supplementary Topics:
+Control Flow (Weeks 3-4):
+[✅] Topic 4: Flags & Comparisons
+[✅] Topic 5: Conditional Jumps
+[✅] Topic 6: Loops
+
+The Stack (Week 5):
+[✅] Topic 7: Stack Operations
+[✅] Topic 8: Stack Frames
+
+Functions (Weeks 6-7):
+[✅] Topic 9: Calling Conventions
+[✅] Topic 10: Procedures
+
+Memory (Week 8):
+[✅] Topic 11: Memory Addressing Modes
+[✅] Topic 12: Arrays & Strings
+
+Advanced Ops (Weeks 9-10):
+[✅] Topic 13: Multiplication & Division
+[✅] Topic 14: Shifts & Rotates
+[✅] Topic 15: Macros & Directives
+
+System Programming (Weeks 11-12):
+[✅] Topic 16: Linux System Calls
+[✅] Topic 17: Interfacing with C
+
+Optimization (Weeks 13-14):
+[✅] Topic 18: SIMD Instructions
+[✅] Topic 19: Performance & Optimization
+[✅] Topic 20: Debugging & Tools
+
+OS Internals (Weeks 15-18):
+[✅] Topic 21: Memory Allocation Internals
+[✅] Topic 22: Process Internals
+[✅] Topic 23: Virtual Memory & Paging
+[✅] Topic 24: I/O Internals
+[✅] Topic 25: ELF Binary Format
+[✅] Topic 26: Interrupts & Exceptions
+[✅] Topic 27: Context Switching & Scheduling
+[✅] Topic 28: Synchronization Primitives
+
+Supplementary:
 [✅] Instruction Encoding (Advanced)
-
-Q&A Deep Dives:
-[✅] Push and Pop Explained
-[✅] int 0x80 vs syscall
-[✅] Memory Addressing [ ]
-[✅] Sections and XOR Optimization
-
-Reference Materials:
-[✅] Quick Reference Guide
-[✅] Complete Index
+[✅] 12 Q&A Deep-Dive Articles
+[✅] Comprehensive Syscall Reference
 ```
 
 ---
