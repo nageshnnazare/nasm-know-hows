@@ -109,17 +109,17 @@ syscall                     ; Make the call
 ### **Memory Management Syscalls**
 
 ```
-┌────────┬─────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────┬─────────────┐
-│ Number │ Syscall │ RAX             │ RDI (arg1)      │ RSI (arg2)      │ RDX (arg3)      │ R10 (arg4)  │ R8 (arg5)   │
-├────────┼─────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────┼─────────────┤
-│   9    │ mmap    │ 9               │ void *addr      │ size_t length   │ int prot        │ int flags   │ int fd      │
-│  10    │ mprotect│ 10              │ void *addr      │ size_t len      │ int prot        │ -           │ -           │
-│  11    │ munmap  │ 11              │ void *addr      │ size_t length   │ -               │ -           │ -           │
-│  12    │ brk     │ 12              │ void *addr      │ -               │ -               │ -           │ -           │
+┌────────┬─────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────┬──────────────┐
+│ Number │ Syscall │ RAX             │ RDI (arg1)      │ RSI (arg2)      │ RDX (arg3)      │ R10 (arg4)  │ R8 (arg5)    │
+├────────┼─────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────┼──────────────┤
+│   9    │ mmap    │ 9               │ void *addr      │ size_t length   │ int prot        │ int flags   │ int fd       │
+│  10    │ mprotect│ 10              │ void *addr      │ size_t len      │ int prot        │ -           │ -            │
+│  11    │ munmap  │ 11              │ void *addr      │ size_t length   │ -               │ -           │ -            │
+│  12    │ brk     │ 12              │ void *addr      │ -               │ -               │ -           │ -            │
 │  25    │ mremap  │ 25              │ void *old_addr  │ size_t old_size │ size_t new_size │ int flags   │void *new_addr│
-│  26    │ msync   │ 26              │ void *addr      │ size_t length   │ int flags       │ -           │ -           │
-│  28    │ madvise │ 28              │ void *addr      │ size_t length   │ int advice      │ -           │ -           │
-└────────┴─────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────┴─────────────┘
+│  26    │ msync   │ 26              │ void *addr      │ size_t length   │ int flags       │ -           │ -            │
+│  28    │ madvise │ 28              │ void *addr      │ size_t length   │ int advice      │ -           │ -            │
+└────────┴─────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────┴──────────────┘
 
 Note: mmap has a 6th argument - R9 (arg6) = off_t offset
 ```
@@ -157,22 +157,22 @@ Note: mmap has a 6th argument - R9 (arg6) = off_t offset
 ### **Socket/Network Syscalls**
 
 ```
-┌────────┬─────────┬─────────────────┬─────────────────┬─────────────────┬─────────────────┬─────────────┬─────────────┐
-│ Number │ Syscall │ RAX             │ RDI (arg1)      │ RSI (arg2)      │ RDX (arg3)      │ R10 (arg4)  │ R8 (arg5)   │
-├────────┼─────────┼─────────────────┼─────────────────┼─────────────────┼─────────────────┼─────────────┼─────────────┤
-│  41    │ socket  │ 41              │ int domain      │ int type        │ int protocol    │ -           │ -           │
-│  42    │ connect │ 42              │ int sockfd      │ sockaddr *addr  │ socklen_t addrlen│ -          │ -           │
-│  43    │ accept  │ 43              │ int sockfd      │ sockaddr *addr  │ socklen_t *addrlen│ -         │ -           │
-│  44    │ sendto  │ 44              │ int sockfd      │ void *buf       │ size_t len      │ int flags   │ sockaddr *dst│
-│  45    │ recvfrom│ 45              │ int sockfd      │ void *buf       │ size_t len      │ int flags   │ sockaddr *src│
-│  46    │ sendmsg │ 46              │ int sockfd      │ msghdr *msg     │ int flags       │ -           │ -           │
-│  47    │ recvmsg │ 47              │ int sockfd      │ msghdr *msg     │ int flags       │ -           │ -           │
-│  48    │ shutdown│ 48              │ int sockfd      │ int how         │ -               │ -           │ -           │
-│  49    │ bind    │ 49              │ int sockfd      │ sockaddr *addr  │ socklen_t addrlen│ -          │ -           │
-│  50    │ listen  │ 50              │ int sockfd      │ int backlog     │ -               │ -           │ -           │
-│  54    │ setsockopt│54             │ int sockfd      │ int level       │ int optname     │ void *optval│ socklen_t len│
-│  55    │ getsockopt│55             │ int sockfd      │ int level       │ int optname     │ void *optval│ socklen_t *len│
-└────────┴─────────┴─────────────────┴─────────────────┴─────────────────┴─────────────────┴─────────────┴─────────────┘
+┌────────┬─────────┬─────────────────┬─────────────────┬─────────────────┬────────────────────┬─────────────┬───────────────┐
+│ Number │ Syscall │ RAX             │ RDI (arg1)      │ RSI (arg2)      │ RDX (arg3)         │ R10 (arg4)  │ R8 (arg5)     │
+├────────┼─────────┼─────────────────┼─────────────────┼─────────────────┼────────────────────┼─────────────┼───────────────┤
+│  41    │ socket  │ 41              │ int domain      │ int type        │ int protocol       │ -           │ -             │
+│  42    │ connect │ 42              │ int sockfd      │ sockaddr *addr  │ socklen_t addrlen  │ -           │ -             │
+│  43    │ accept  │ 43              │ int sockfd      │ sockaddr *addr  │ socklen_t *addrlen │ -           │ -             │
+│  44    │ sendto  │ 44              │ int sockfd      │ void *buf       │ size_t len         │ int flags   │ sockaddr *dst │
+│  45    │ recvfrom│ 45              │ int sockfd      │ void *buf       │ size_t len         │ int flags   │ sockaddr *src │
+│  46    │ sendmsg │ 46              │ int sockfd      │ msghdr *msg     │ int flags          │ -           │ -             │
+│  47    │ recvmsg │ 47              │ int sockfd      │ msghdr *msg     │ int flags          │ -           │ -             │
+│  48    │ shutdown│ 48              │ int sockfd      │ int how         │ -                  │ -           │ -             │
+│  49    │ bind    │ 49              │ int sockfd      │ sockaddr *addr  │ socklen_t addrlen  │ -           │ -             │
+│  50    │ listen  │ 50              │ int sockfd      │ int backlog     │ -                  │ -           │ -             │
+│  54    │ setsockopt│54             │ int sockfd      │ int level       │ int optname        │ void *optval│ socklen_t len │
+│  55    │ getsockopt│55             │ int sockfd      │ int level       │ int optname        │ void *optval│ socklen_t *len│
+└────────┴─────────┴─────────────────┴─────────────────┴─────────────────┴────────────────────┴─────────────┴───────────────┘
 
 Note: sendto/recvfrom have 6th argument - R9 (arg6) = socklen_t addrlen (for sendto)
 ```
@@ -542,39 +542,39 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│   0    │ read    - Read from file descriptor            │
-│   1    │ write   - Write to file descriptor             │
-│   2    │ open    - Open file                            │
-│   3    │ close   - Close file descriptor                │
-│   4    │ stat    - Get file status                      │
-│   5    │ fstat   - Get file status by fd                │
-│   6    │ lstat   - Get file status (no follow symlink)  │
-│   8    │ lseek   - Reposition file offset               │
-│  16    │ ioctl   - Control device                       │
-│  17    │ pread64 - Read from fd at offset               │
-│  18    │ pwrite64- Write to fd at offset                │
-│  19    │ readv   - Read into multiple buffers           │
-│  20    │ writev  - Write from multiple buffers          │
-│  32    │ dup     - Duplicate file descriptor            │
-│  33    │ dup2    - Duplicate fd to specific number      │
-│  72    │ fcntl   - File control                         │
-│  73    │ flock   - File locking                         │
-│  74    │ fsync   - Synchronize file state               │
-│  75    │ fdatasync - Sync file data                     │
-│  76    │ truncate - Truncate file to length             │
-│  77    │ ftruncate - Truncate file by fd                │
-│  78    │ getdents - Get directory entries               │
-│  85    │ creat   - Create file                          │
-│  86    │ link    - Make hard link                       │
-│  87    │ unlink  - Delete file                          │
-│  88    │ symlink - Make symbolic link                   │
-│  89    │ readlink - Read symbolic link                  │
-│  90    │ chmod   - Change file permissions              │
-│  91    │ fchmod  - Change file permissions by fd        │
-│  92    │ chown   - Change file owner                    │
-│  93    │ fchown  - Change file owner by fd              │
-│  94    │ lchown  - Change file owner (no follow)        │
-│  95    │ umask   - Set file creation mask               │
+│   0    │ read    - Read from file descriptor             │
+│   1    │ write   - Write to file descriptor              │
+│   2    │ open    - Open file                             │
+│   3    │ close   - Close file descriptor                 │
+│   4    │ stat    - Get file status                       │
+│   5    │ fstat   - Get file status by fd                 │
+│   6    │ lstat   - Get file status (no follow symlink)   │
+│   8    │ lseek   - Reposition file offset                │
+│  16    │ ioctl   - Control device                        │
+│  17    │ pread64 - Read from fd at offset                │
+│  18    │ pwrite64- Write to fd at offset                 │
+│  19    │ readv   - Read into multiple buffers            │
+│  20    │ writev  - Write from multiple buffers           │
+│  32    │ dup     - Duplicate file descriptor             │
+│  33    │ dup2    - Duplicate fd to specific number       │ 
+│  72    │ fcntl   - File control                          │  
+│  73    │ flock   - File locking                          │
+│  74    │ fsync   - Synchronize file state                │
+│  75    │ fdatasync - Sync file data                      │ 
+│  76    │ truncate - Truncate file to length              │
+│  77    │ ftruncate - Truncate file by fd                 │
+│  78    │ getdents - Get directory entries                │  
+│  85    │ creat   - Create file                           │
+│  86    │ link    - Make hard link                        │
+│  87    │ unlink  - Delete file                           │
+│  88    │ symlink - Make symbolic link                    │
+│  89    │ readlink - Read symbolic link                   │
+│  90    │ chmod   - Change file permissions               │
+│  91    │ fchmod  - Change file permissions by fd         │
+│  92    │ chown   - Change file owner                     │
+│  93    │ fchown  - Change file owner by fd               │
+│  94    │ lchown  - Change file owner (no follow)         │
+│  95    │ umask   - Set file creation mask                │ 
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -583,24 +583,24 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│  57    │ fork    - Create child process                 │
-│  58    │ vfork   - Create child (share memory)          │
-│  59    │ execve  - Execute program                      │
-│  60    │ exit    - Terminate process                    │
-│  61    │ wait4   - Wait for process                     │
-│  62    │ kill    - Send signal                          │
-│  96    │ getpriority - Get scheduling priority          │
-│  97    │ setpriority - Set scheduling priority          │
-│ 102    │ getuid  - Get user ID                          │
-│ 104    │ getgid  - Get group ID                         │
-│ 105    │ setuid  - Set user ID                          │
-│ 106    │ setgid  - Set group ID                         │
-│ 107    │ geteuid - Get effective user ID                │
-│ 108    │ getegid - Get effective group ID               │
-│ 110    │ getppid - Get parent process ID                │
-│ 111    │ getpgrp - Get process group                    │
-│ 186    │ gettid  - Get thread ID                        │
-│ 231    │ exit_group - Exit all threads                  │
+│  57    │ fork    - Create child process                  │
+│  58    │ vfork   - Create child (share memory)           │
+│  59    │ execve  - Execute program                       │
+│  60    │ exit    - Terminate process                     │
+│  61    │ wait4   - Wait for process                      │
+│  62    │ kill    - Send signal                           │
+│  96    │ getpriority - Get scheduling priority           │
+│  97    │ setpriority - Set scheduling priority           │
+│ 102    │ getuid  - Get user ID                           │
+│ 104    │ getgid  - Get group ID                          │
+│ 105    │ setuid  - Set user ID                           │
+│ 106    │ setgid  - Set group ID                          │
+│ 107    │ geteuid - Get effective user ID                 │
+│ 108    │ getegid - Get effective group ID                │
+│ 110    │ getppid - Get parent process ID                 │ 
+│ 111    │ getpgrp - Get process group                     │ 
+│ 186    │ gettid  - Get thread ID                         │
+│ 231    │ exit_group - Exit all threads                   │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -609,17 +609,17 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│   9    │ mmap    - Map memory                           │
-│  10    │ mprotect - Set memory protection               │
-│  11    │ munmap  - Unmap memory                         │
-│  12    │ brk     - Change data segment size             │
-│  25    │ mremap  - Remap memory                         │
-│  26    │ msync   - Synchronize memory with storage      │
-│  27    │ mincore - Determine if pages are in memory     │
-│  28    │ madvise - Give advice about memory usage       │
-│  29    │ shmget  - Get shared memory segment            │
-│  30    │ shmat   - Attach shared memory                 │
-│  31    │ shmctl  - Shared memory control                │
+│   9    │ mmap    - Map memory                            │
+│  10    │ mprotect - Set memory protection                │
+│  11    │ munmap  - Unmap memory                          │
+│  12    │ brk     - Change data segment size              │  
+│  25    │ mremap  - Remap memory                          │
+│  26    │ msync   - Synchronize memory with storage       │
+│  27    │ mincore - Determine if pages are in memory      │
+│  28    │ madvise - Give advice about memory usage        │
+│  29    │ shmget  - Get shared memory segment             │
+│  30    │ shmat   - Attach shared memory                  │
+│  31    │ shmctl  - Shared memory control                 │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -628,15 +628,15 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│  13    │ rt_sigaction - Set signal action               │
-│  14    │ rt_sigprocmask - Set signal mask               │
-│  15    │ rt_sigreturn - Return from signal              │
-│  34    │ pause   - Wait for signal                      │
-│  62    │ kill    - Send signal to process               │
-│ 127    │ rt_sigpending - Get pending signals            │
-│ 128    │ rt_sigtimedwait - Wait for signal with timeout │
-│ 129    │ rt_sigqueueinfo - Queue signal                 │
-│ 130    │ rt_sigsuspend - Wait for signal                │
+│  13    │ rt_sigaction - Set signal action                │
+│  14    │ rt_sigprocmask - Set signal mask                │
+│  15    │ rt_sigreturn - Return from signal               │
+│  34    │ pause   - Wait for signal                       │
+│  62    │ kill    - Send signal to process                │
+│ 127    │ rt_sigpending - Get pending signals             │
+│ 128    │ rt_sigtimedwait - Wait for signal with timeout  │
+│ 129    │ rt_sigqueueinfo - Queue signal                  │
+│ 130    │ rt_sigsuspend - Wait for signal                 │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -645,17 +645,17 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│  35    │ nanosleep - High-resolution sleep              │
-│  96    │ gettimeofday - Get time (deprecated)           │
-│ 163    │ settimeofday - Set time (deprecated)           │
-│ 201    │ time    - Get current time                     │
-│ 228    │ clock_gettime - Get time from clock            │
-│ 229    │ clock_settime - Set time for clock             │
-│ 230    │ clock_getres - Get clock resolution            │
-│ 222    │ timer_create - Create timer                    │
-│ 223    │ timer_settime - Set timer                      │
-│ 224    │ timer_gettime - Get timer                      │
-│ 226    │ timer_delete - Delete timer                    │
+│  35    │ nanosleep - High-resolution sleep               │
+│  96    │ gettimeofday - Get time (deprecated)            │
+│ 163    │ settimeofday - Set time (deprecated)            │
+│ 201    │ time    - Get current time                      │
+│ 228    │ clock_gettime - Get time from clock             │ 
+│ 229    │ clock_settime - Set time for clock              │
+│ 230    │ clock_getres - Get clock resolution             │
+│ 222    │ timer_create - Create timer                     │
+│ 223    │ timer_settime - Set timer                       │
+│ 224    │ timer_gettime - Get timer                       │
+│ 226    │ timer_delete - Delete timer                     │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -664,13 +664,13 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│  79    │ getcwd  - Get current directory                │
-│  80    │ chdir   - Change directory                     │
-│  81    │ fchdir  - Change directory by fd               │
-│  82    │ rename  - Rename file                          │
-│  83    │ mkdir   - Create directory                     │
-│  84    │ rmdir   - Remove directory                     │
-│ 161    │ chroot  - Change root directory                │
+│  79    │ getcwd  - Get current directory                 │
+│  80    │ chdir   - Change directory                      │
+│  81    │ fchdir  - Change directory by fd                │
+│  82    │ rename  - Rename file                           │ 
+│  83    │ mkdir   - Create directory                      │
+│  84    │ rmdir   - Remove directory                      │ 
+│ 161    │ chroot  - Change root directory                 │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
@@ -679,21 +679,21 @@ syscall
 ┌────────┬─────────────────────────────────────────────────┐
 │ Number │ Syscall                                         │
 ├────────┼─────────────────────────────────────────────────┤
-│  41    │ socket  - Create socket                        │
-│  42    │ connect - Connect socket                       │
-│  43    │ accept  - Accept connection                    │
-│  44    │ sendto  - Send message                         │
-│  45    │ recvfrom - Receive message                     │
-│  46    │ sendmsg - Send message (advanced)              │
-│  47    │ recvmsg - Receive message (advanced)           │
-│  48    │ shutdown - Shut down socket                    │
-│  49    │ bind    - Bind socket to address               │
-│  50    │ listen  - Listen for connections               │
-│  51    │ getsockname - Get socket name                  │
-│  52    │ getpeername - Get peer name                    │
-│  53    │ socketpair - Create socket pair                │
-│  54    │ setsockopt - Set socket options                │
-│  55    │ getsockopt - Get socket options                │
+│  41    │ socket  - Create socket                         │
+│  42    │ connect - Connect socket                        │
+│  43    │ accept  - Accept connection                     │
+│  44    │ sendto  - Send message                          │
+│  45    │ recvfrom - Receive message                      │
+│  46    │ sendmsg - Send message (advanced)               │
+│  47    │ recvmsg - Receive message (advanced)            │
+│  48    │ shutdown - Shut down socket                     │
+│  49    │ bind    - Bind socket to address                │
+│  50    │ listen  - Listen for connections                │
+│  51    │ getsockname - Get socket name                   │
+│  52    │ getpeername - Get peer name                     │
+│  53    │ socketpair - Create socket pair                 │
+│  54    │ setsockopt - Set socket options                 │
+│  55    │ getsockopt - Get socket options                 │
 └────────┴─────────────────────────────────────────────────┘
 ```
 
