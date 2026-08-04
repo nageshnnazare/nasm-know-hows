@@ -16,6 +16,8 @@ unsigned long long wide = (unsigned long long)a * b;  // 64-bit * 64-bit = 128-b
 
 ## Multiplication Instructions
 
+![mul and div use the RDX:RAX register pair](../figures/muldiv.svg)
+
 ### `MUL` - Unsigned Multiplication
 
 ```nasm

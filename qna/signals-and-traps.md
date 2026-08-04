@@ -41,8 +41,11 @@ Signal (software mechanism):
 
 ### The Delivery Mechanism
 
-```
-Your process is running in user mode:
+![How the kernel delivers a signal to a process](../figures/signal-delivery.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Your process is running in user mode:
   mov rax, [some_address]    ← executing normally
 
 A signal arrives (e.g., another process called kill(your_pid, SIGUSR1)):
@@ -86,8 +89,8 @@ A signal arrives (e.g., another process called kill(your_pid, SIGUSR1)):
    → Executes rt_sigreturn trampoline on stack
    → sys_rt_sigreturn syscall
    → Kernel restores original registers from ucontext on stack
-   → Returns to your ORIGINAL code as if nothing happened
-```
+   → Returns to your ORIGINAL code as if nothing happened</code></pre>
+</details>
 
 ### In Assembly Terms
 

@@ -25,12 +25,15 @@ for (int i = 0; i < 4; ++i) {
 
 16 registers: **XMM0-XMM15**
 
-```
-XMM0: [127 -------- 64][63 -------- 0]
+![XMM is contained in YMM is contained in ZMM, with packed lanes](../figures/simd-regs.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>XMM0: [127 -------- 64][63 -------- 0]
       |    64-bit     ||    64-bit    |
       | 4x float      || 2x double    |
-      | 4x int32      || 2x int64     |
-```
+      | 4x int32      || 2x int64     |</code></pre>
+</details>
 
 **Data Layouts:**
 

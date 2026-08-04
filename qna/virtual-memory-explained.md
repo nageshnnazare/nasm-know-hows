@@ -14,8 +14,11 @@ Virtual memory is an illusion: every process thinks it has 256TB of contiguous m
 
 ## The Translation (One Slide Version)
 
-```
-Your instruction: mov rax, [0x7FFFF7A2C123]
+![The four-level page-table walk](../figures/page-table-walk.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Your instruction: mov rax, [0x7FFFF7A2C123]
 
 CPU does (transparently, ~1ns with TLB hit):
 
@@ -38,8 +41,8 @@ CPU does (transparently, ~1ns with TLB hit):
   Physical Address: 0x1F3A0000 + 0x123 = 0x1F3A0123
   ┌─────────────────────────────────────────────┐
   │ Physical RAM byte at 0x1F3A0123             │
-  └─────────────────────────────────────────────┘
-```
+  └─────────────────────────────────────────────┘</code></pre>
+</details>
 
 ---
 

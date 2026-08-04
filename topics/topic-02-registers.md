@@ -33,8 +33,11 @@ Speed Comparison:
 
 In 64-bit mode, you have **16 general-purpose registers**:
 
-```
-Original 8 (from 8086 era):
+![The 16 general-purpose registers plus RIP and RFLAGS](../figures/register-file.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Original 8 (from 8086 era):
 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
 │ RAX │ RBX │ RCX │ RDX │ RSI │ RDI │ RBP │ RSP │
 └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
@@ -42,8 +45,8 @@ Original 8 (from 8086 era):
 Extended 8 (added in x64):
 ┌────┬────┬────┬────┬────┬────┬────┬────┐
 │ R8 │ R9 │ R10│ R11│ R12│ R13│ R14│ R15│
-└────┴────┴────┴────┴────┴────┴────┴────┘
-```
+└────┴────┴────┴────┴────┴────┴────┴────┘</code></pre>
+</details>
 
 ---
 
@@ -53,8 +56,11 @@ Each register can be accessed at **different sizes**. Here's the magic:
 
 ### **RAX Register Family Tree**
 
-```
-┌──────────────────────────────────────────────────────────────┐
+![RAX, EAX, AX, AH and AL are windows onto one 64-bit register](../figures/rax-family.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
 │                      RAX (64-bit)                            │
 │  ┌───────────────────────────────────────────────────────┐   │
 │  │                    (bits 63-0)                        │   │
@@ -86,8 +92,8 @@ Each register can be accessed at **different sizes**. Here's the magic:
                 │  ┌─────────┐  │                   │  ┌──────────┐  │
                 │  │ (15-8)  │  │                   │  │  (7-0)   │  │
                 │  └─────────┘  │                   │  └──────────┘  │
-                └───────────────┘                   └────────────────┘
-```
+                └───────────────┘                   └────────────────┘</code></pre>
+</details>
 
 ### **All Register Sizes**
 

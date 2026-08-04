@@ -156,8 +156,11 @@ With COW:
 
 This confuses everyone at first. Think of it this way:
 
-```
-         fork()
+![fork with copy-on-write](../figures/fork-cow.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>         fork()
            │
     ┌──────┴──────┐
     │             │
@@ -168,8 +171,8 @@ This confuses everyone at first. Think of it this way:
     │             │
     │             │
  continues     continues
- same code     same code
-```
+ same code     same code</code></pre>
+</details>
 
 Both processes execute the exact same code after fork. The ONLY way to tell them apart is checking the return value. That's why the pattern is always:
 

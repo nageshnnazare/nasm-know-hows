@@ -66,8 +66,11 @@ x86-64 Interrupt Classification:
 
 ### IDT Structure
 
-```
-The IDT maps interrupt/exception numbers (0-255) to handler addresses:
+![Interrupt dispatch through the IDT](../figures/idt.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>The IDT maps interrupt/exception numbers (0-255) to handler addresses:
 
 IDT Register (IDTR):
 ┌─────────────────────────────────────────┐
@@ -92,8 +95,8 @@ Interrupt Gate vs Trap Gate:
   Trap Gate: keeps IF unchanged (interrupts remain enabled)
   
   Exceptions (like #PF): use Trap Gate (kernel needs interrupts for I/O)
-  Hardware IRQs: use Interrupt Gate (prevent interrupt nesting)
-```
+  Hardware IRQs: use Interrupt Gate (prevent interrupt nesting)</code></pre>
+</details>
 
 ### IDT Entries for x86-64 Exceptions
 
@@ -130,6 +133,8 @@ Vector  Name                     Type    Error Code?
 ## Part 3: What Happens During an Exception
 
 ### Page Fault (#PF, Vector 14) — Step by Step
+
+![How the kernel resolves a page fault](../figures/page-fault.svg)
 
 ```
 Your code: mov rax, [0x0]     ← NULL pointer dereference!

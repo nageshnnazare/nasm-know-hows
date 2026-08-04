@@ -88,8 +88,11 @@ _start:
 
 ### **Register Usage**
 
-```
-┌──────────────────────────────────────────────────────────┐
+![Caller-saved versus callee-saved registers](../figures/caller-callee.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌──────────────────────────────────────────────────────────┐
 │  FUNCTION ARGUMENTS (in order)                           │
 │  1st: RDI    2nd: RSI    3rd: RDX                        │
 │  4th: RCX    5th: R8     6th: R9                         │
@@ -114,8 +117,8 @@ _start:
 │  Function must preserve (save and restore)               │
 │  RBX, RBP, R12-R15                                       │
 │  RSP (always!)                                           │
-└──────────────────────────────────────────────────────────┘
-```
+└──────────────────────────────────────────────────────────┘</code></pre>
+</details>
 
 ### **Complete Function Template**
 

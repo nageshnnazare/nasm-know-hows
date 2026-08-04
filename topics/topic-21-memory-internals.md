@@ -21,8 +21,11 @@ free(ptr);
 
 ## The Memory Hierarchy
 
-```
-┌─────────────────────────────────────────────────────────┐
+![The memory hierarchy from registers to disk](../figures/memory-hierarchy.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌─────────────────────────────────────────────────────────┐
 │                    User Space                           │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │  malloc() / free()  [glibc / musl / custom]       │  │
@@ -45,8 +48,8 @@ free(ptr);
 │  │  - Free page frames                               │  │
 │  │  - Zone management (DMA, Normal, HighMem)         │  │
 │  └───────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────┘
-```
+└─────────────────────────────────────────────────────────┘</code></pre>
+</details>
 
 ---
 
@@ -56,8 +59,11 @@ free(ptr);
 
 The program break is the boundary between the heap and unused virtual address space. Moving it up "allocates" more virtual address space for the heap.
 
-```
-Virtual Memory Layout:
+![How the heap grows: brk for small, mmap for large](../figures/brk-vs-mmap.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Virtual Memory Layout:
                     Low Addresses
 ┌──────────────────┐ 0x400000
 │    .text         │ (code)
@@ -78,8 +84,8 @@ Virtual Memory Layout:
 ├──────────────────┤
 │   Kernel Space   │
 └──────────────────┘ 0x7FFFFFFFFFFF
-                    High Addresses
-```
+                    High Addresses</code></pre>
+</details>
 
 ### brk() Syscall in Assembly
 
@@ -298,8 +304,11 @@ _start:
 
 Every `malloc` implementation wraps each allocation in a chunk with metadata. Here's what glibc's `malloc` (ptmalloc2) uses:
 
-```
-Allocated chunk:
+![A glibc malloc chunk: size, flags, payload](../figures/chunk.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Allocated chunk:
 ┌────────────────────────┐ ← chunk pointer (hidden from user)
 │  prev_size (8 bytes)   │  Size of previous chunk (if free)
 ├────────────────────────┤
@@ -331,8 +340,8 @@ Free chunk:
 Flags in size field (3 least significant bits):
   Bit 0 (P): PREV_INUSE - previous chunk is allocated
   Bit 1 (M): IS_MMAPPED - chunk was allocated via mmap
-  Bit 2 (A): NON_MAIN_ARENA - chunk belongs to non-main arena
-```
+  Bit 2 (A): NON_MAIN_ARENA - chunk belongs to non-main arena</code></pre>
+</details>
 
 ### Implementing a Simple malloc in Assembly
 
@@ -772,8 +781,11 @@ _start:
 
 In multi-threaded programs, a single lock on the heap would be a bottleneck. Modern allocators use per-thread arenas:
 
-```
-Thread 1 Arena:          Thread 2 Arena:         Thread 3 Arena:
+![Per-thread arenas reduce malloc lock contention](../figures/arenas.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Thread 1 Arena:          Thread 2 Arena:         Thread 3 Arena:
 ┌────────────────┐      ┌────────────────┐      ┌────────────────┐
 │ Fast bins      │      │ Fast bins      │      │ Fast bins      │
 │ Small bins     │      │ Small bins     │      │ Small bins     │
@@ -781,8 +793,8 @@ Thread 1 Arena:          Thread 2 Arena:         Thread 3 Arena:
 │ Top chunk      │      │ Top chunk      │      │ Top chunk      │
 └───────┬────────┘      └───────┬────────┘      └───────┬────────┘
         │                       │                       │
-        └── mmap'd region ──────┴── mmap'd region ──────┘
-```
+        └── mmap'd region ──────┴── mmap'd region ──────┘</code></pre>
+</details>
 
 ```nasm
 ; Per-thread allocation using thread-local storage (TLS)

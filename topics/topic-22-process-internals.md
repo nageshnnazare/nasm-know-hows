@@ -27,8 +27,11 @@ if (pid == 0) {
 
 ## Part 1: Process Memory Layout
 
-```
-Process Virtual Address Space (x86-64 Linux):
+![The process virtual address space layout](../figures/address-space.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Process Virtual Address Space (x86-64 Linux):
 
 0x0000000000000000 ┌──────────────────────────┐
                    │      NULL page           │ (unmapped, catches NULL deref)
@@ -58,8 +61,8 @@ Process Virtual Address Space (x86-64 Linux):
                    │                          │
 ~0x00007FFFFFFFFFFF├──────────────────────────┤
                    │   Kernel space           │ (not accessible from user mode)
-0xFFFFFFFFFFFFFFFF └──────────────────────────┘
-```
+0xFFFFFFFFFFFFFFFF └──────────────────────────┘</code></pre>
+</details>
 
 ### Examining Our Own Process
 
@@ -206,8 +209,11 @@ _start:
 
 ### What fork() Actually Does in the Kernel
 
-```
-Before fork():                    After fork():
+![fork with copy-on-write: pages shared until first write](../figures/fork-cow.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Before fork():                    After fork():
 
 Parent Process:                   Parent Process:        Child Process:
 ┌──────────────────┐              ┌──────────────────┐  ┌──────────────────┐
@@ -235,8 +241,8 @@ Parent Process:                   Parent Process:        Child Process:
                                           ┌─────────┴───────────┐
                                           │ SAME Physical Pages │
                                           │ (Copy-on-Write)     │
-                                          └─────────────────────┘
-```
+                                          └─────────────────────┘</code></pre>
+</details>
 
 ### Copy-on-Write (COW) Mechanism
 
@@ -427,8 +433,11 @@ _start:
 
 ### What the Kernel Does During execve()
 
-```
-execve("/bin/ls", argv, envp) kernel path:
+![execve maps the ELF's LOAD segments into a fresh address space](../figures/elf-load.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>execve("/bin/ls", argv, envp) kernel path:
 
 1. Open the file, read ELF header
    ┌────────────────────────────────────┐
@@ -478,8 +487,8 @@ execve("/bin/ls", argv, envp) kernel path:
    │ RIP = entry point (from ELF)       │
    │ All other registers = 0            │
    │ Return to user mode                │
-   └────────────────────────────────────┘
-```
+   └────────────────────────────────────┘</code></pre>
+</details>
 
 ### The Initial Stack After execve
 

@@ -182,6 +182,8 @@ cas_128:
 
 ### Simple Spinlock (Test-and-Set)
 
+![A spinlock is one atomic compare-exchange](../figures/spinlock.svg)
+
 ```nasm
 ; A spinlock is the simplest mutex: busy-wait until lock is free
 ; Good for: very short critical sections, kernel context (can't sleep)
@@ -256,6 +258,8 @@ ticket_unlock:
 ## Part 4: The Futex Syscall
 
 ### What is a Futex?
+
+![A futex: fast path in user space, slow path in the kernel](../figures/futex.svg)
 
 ```
 Futex = Fast Userspace muTEX

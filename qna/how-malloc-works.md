@@ -16,8 +16,11 @@
 
 ### Level 0: What malloc Returns
 
-```
-You call:  void *p = malloc(64);
+![The two paths malloc can take to satisfy a request](../figures/malloc-paths.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>You call:  void *p = malloc(64);
 You get:   p = 0x55555576a2b0 (a virtual address)
 You think: "I have 64 bytes starting at p"
 
@@ -27,8 +30,8 @@ Reality:   malloc actually allocated ~80 bytes:
            └──────────────────────────────────────────┘
             ↑                   ↑
             chunk start         pointer returned to you
-            (0x55555576a2a0)    (0x55555576a2b0)
-```
+            (0x55555576a2a0)    (0x55555576a2b0)</code></pre>
+</details>
 
 ### Level 1: The Hidden Header
 

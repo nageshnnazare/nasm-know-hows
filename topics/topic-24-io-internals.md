@@ -36,8 +36,11 @@ section .rodata
 
 ### What Happens Inside `syscall`
 
-```
-CPU executes SYSCALL instruction:
+![The syscall instruction path into the kernel](../figures/syscall-path.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>CPU executes SYSCALL instruction:
 ┌─────────────────────────────────────────────────────────────────────┐
 │ 1. Save user RIP → RCX (return address)                             │
 │ 2. Save user RFLAGS → R11                                           │
@@ -57,8 +60,8 @@ Kernel syscall entry (entry_SYSCALL_64):
 │ 5. Store return value in RAX slot of saved registers                │
 │ 6. Restore user registers from kernel stack                         │
 │ 7. Execute SYSRET (return to user mode)                             │
-└─────────────────────────────────────────────────────────────────────┘
-```
+└─────────────────────────────────────────────────────────────────────┘</code></pre>
+</details>
 
 ### Inside sys_write()
 

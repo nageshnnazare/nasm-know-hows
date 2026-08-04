@@ -7,8 +7,11 @@
 
 ## Quick Answer
 
-```
-┌────────┬─────────────────┬──────────────────────────────┐
+![cmp/test set flags; jcc reads them](../figures/cmp-jcc.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌────────┬─────────────────┬──────────────────────────────┐
 │ Instr  │ Operation       │ Primary Use                  │
 ├────────┼─────────────────┼──────────────────────────────┤
 │ CMP    │ Subtraction     │ Comparing values (equality,  │
@@ -16,8 +19,8 @@
 ├────────┼─────────────────┼──────────────────────────────┤
 │ TEST   │ AND             │ Testing bits, checking zero, │
 │        │ (doesn't store) │ checking sign                │
-└────────┴─────────────────┴──────────────────────────────┘
-```
+└────────┴─────────────────┴──────────────────────────────┘</code></pre>
+</details>
 
 ---
 

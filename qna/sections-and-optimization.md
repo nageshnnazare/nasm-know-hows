@@ -12,8 +12,11 @@
 
 When your program runs, memory is organized into **segments** (sections):
 
-```
-┌─────────────────────────────────────┐  High Memory (0xFFFF...)
+![The process virtual address space layout](../figures/address-space.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌─────────────────────────────────────┐  High Memory (0xFFFF...)
 │         STACK                       │  ← Function calls, local vars
 │         ↓ grows down                │
 ├─────────────────────────────────────┤
@@ -31,8 +34,8 @@ When your program runs, memory is organized into **segments** (sections):
 │         .rodata (read-only data)    │  ← String literals, const
 ├─────────────────────────────────────┤
 │         .text (code)                │  ← Your program instructions
-└─────────────────────────────────────┘  Low Memory (0x0000...)
-```
+└─────────────────────────────────────┘  Low Memory (0x0000...)</code></pre>
+</details>
 
 ---
 

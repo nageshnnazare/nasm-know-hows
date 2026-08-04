@@ -173,8 +173,11 @@ The `push/pop` method is useful when you need to understand stack operations, bu
 
 ## Visual Representation
 
-```
-Stack Memory (grows downward):
+![push and pop move RSP by 8](../figures/push-pop.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Stack Memory (grows downward):
 ┌──────────┐
 │  (high)  │
 ├──────────┤
@@ -189,8 +192,8 @@ Stack Memory (grows downward):
 │   ...    │
 │          │
 │  (low)   │
-└──────────┘
-```
+└──────────┘</code></pre>
+</details>
 
 ---
 

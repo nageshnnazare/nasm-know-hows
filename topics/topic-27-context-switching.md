@@ -20,8 +20,11 @@ When the OS switches from running Process A to Process B, it must save every pie
 
 ## Part 1: What Is Process Context?
 
-```
-Complete process context (everything that defines execution state):
+![A context switch saves and restores register state](../figures/context-switch.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Complete process context (everything that defines execution state):
 
 ┌─────────────────────────────────────────────────────────────────┐
 │ CPU Registers (saved/restored on context switch):               │
@@ -48,8 +51,8 @@ What ISN'T switched:
   - Kernel code and data (same in all processes)
   - Hardware state (I/O APIC, PCI devices)
   - CPU caches (L1/L2/L3) — NOT flushed, but effectively cold
-  - Branch predictor state — NOT flushed, can cause slowdown
-```
+  - Branch predictor state — NOT flushed, can cause slowdown</code></pre>
+</details>
 
 ---
 
@@ -569,8 +572,11 @@ get_current_cpu:
 
 ## Part 9: Process States
 
-```
-Linux Process States:
+![The process state machine](../figures/process-states.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Linux Process States:
 
 ┌─────────────┐     fork()      ┌─────────────┐
 │             │────────────────→│  TASK_NEW    │
@@ -608,8 +614,8 @@ Linux Process States:
               │ TASK_UNINTERRUPTIBLE     │  event completes         │
               │ (deep sleep, no signals) │──────────────────────────┘
               │ e.g., disk I/O wait      │
-              └──────────────────────────┘
-```
+              └──────────────────────────┘</code></pre>
+</details>
 
 ```nasm
 ; Observing process states from assembly:

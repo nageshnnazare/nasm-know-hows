@@ -111,6 +111,8 @@ add ecx, 1
 
 ## Memory Hierarchy
 
+![The memory hierarchy from registers to disk](../figures/memory-hierarchy.svg)
+
 ### Cache Levels
 
 ```
@@ -124,6 +126,8 @@ RAM:            200+ cycles    Gigabytes
 **Performance Impact:** Cache miss can be **50-200x slower** than cache hit!
 
 ### Cache Lines
+
+![A 64-byte cache line and how false sharing makes it ping-pong](../figures/false-sharing.svg)
 
 - **Size:** 64 bytes (typical)
 - **Prefetching:** CPU loads entire cache line, not just requested byte

@@ -40,8 +40,11 @@ With virtual memory:
 
 ### The Translation
 
-```
-        Virtual Address (48-bit on x86-64)
+![Virtual addresses map to physical frames per process](../figures/virtual-physical.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>        Virtual Address (48-bit on x86-64)
         ┌─────────────────────────────────┐
         │ 0x00007FFFF7A2C000              │
         └───────────────┬─────────────────┘
@@ -59,8 +62,8 @@ The MMU does this for EVERY memory access:
 - Every instruction fetch
 - Every data read
 - Every data write
-At full CPU speed (with TLB cache hits)
-```
+At full CPU speed (with TLB cache hits)</code></pre>
+</details>
 
 ---
 
@@ -68,8 +71,11 @@ At full CPU speed (with TLB cache hits)
 
 ### Virtual Address Breakdown
 
-```
-63        48 47    39 38    30 29    21 20    12 11        0
+![How a 48-bit virtual address splits into table indices](../figures/va-split.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>63        48 47    39 38    30 29    21 20    12 11        0
 ┌──────────┬────────┬────────┬────────┬────────┬──────────┐
 │  Sign    │ PML4   │  PDPT  │   PD   │   PT   │  Offset  │
 │  Extend  │ Index  │ Index  │ Index  │ Index  │          │
@@ -83,13 +89,16 @@ At full CPU speed (with TLB cache hits)
                 └── Index into Page Map Level 4 (512 entries)
 
 Each level: 512 entries × 8 bytes = 4KB (one page)
-Total addressable: 2^48 = 256 TB of virtual address space
-```
+Total addressable: 2^48 = 256 TB of virtual address space</code></pre>
+</details>
 
 ### Page Table Entry (PTE) Format
 
-```
-63  62     52 51                      12 11  9 8 7 6 5 4 3 2 1 0
+![The permission and status bits of a page-table entry](../figures/pte.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>63  62     52 51                      12 11  9 8 7 6 5 4 3 2 1 0
 ┌───┬────────┬──────────────────────────┬─────┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
 │NX │ Avail  │  Physical Page Number    │Avail│G│ │D│A│ │ │U│R│P│
 │   │        │  (40 bits = up to 52-bit │     │ │S│ │ │C│T│/│/│ │
@@ -108,8 +117,8 @@ Bit  Name         Meaning
  8   Global (G)     Don't flush from TLB on CR3 switch
 11:9 Available      OS can use these bits
 51:12 Phys Addr     Physical address of next level / actual page
- 63  NX (No Execute) 1=page cannot contain executable code
-```
+ 63  NX (No Execute) 1=page cannot contain executable code</code></pre>
+</details>
 
 ### Manual Page Table Walk (What the CPU Does)
 
@@ -210,8 +219,11 @@ Total memory accesses for one translation: 4 (without TLB!)
 
 ### Why the TLB is Critical
 
-```
-Without TLB:
+![The TLB caches recent virtual-to-physical translations](../figures/tlb.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Without TLB:
   Every memory access requires 4 additional memory accesses (page walk)
   Effective memory access time: 5 × memory_latency ≈ 500ns
   
@@ -232,8 +244,8 @@ TLB entry:
 ┌──────────────────┬──────────────────────┬────────┐
 │ Virtual Page Num │ Physical Page Frame  │ Flags  │
 │ (tag)            │ (translation result) │ RWXUGD │
-└──────────────────┴──────────────────────┴────────┘
-```
+└──────────────────┴──────────────────────┴────────┘</code></pre>
+</details>
 
 ### TLB Flush Events
 
@@ -413,8 +425,11 @@ _start:
 
 ### Types of Page Faults
 
-```
-Page Fault (Exception #14) occurs when:
+![How the kernel resolves a page fault](../figures/page-fault.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Page Fault (Exception #14) occurs when:
 1. Page Not Present (P=0) - page not in physical memory
 2. Protection Violation - access violates permissions
 3. Reserved Bit Set - malformed page table entry
@@ -428,8 +443,8 @@ CPU pushes error code with fault details:
 │ Bit 4 (I): 1=instruction fetch          │
 └─────────────────────────────────────────┘
 
-CR2 register contains the faulting virtual address.
-```
+CR2 register contains the faulting virtual address.</code></pre>
+</details>
 
 ### Kernel Page Fault Handler (Conceptual)
 

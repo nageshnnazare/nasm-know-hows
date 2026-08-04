@@ -34,16 +34,19 @@ CPU Executes:       RAX now contains value from RBX
 
 x86-64 instructions are **variable length** (1-15 bytes) with this structure:
 
-```
-┌──────────┬────────┬───────┬─────┬──────────────┬───────────┐
+![The byte-level anatomy of an x86-64 instruction](../figures/instr-format.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌──────────┬────────┬───────┬─────┬──────────────┬───────────┐
 │ Prefixes │ Opcode │ ModR/M│ SIB │ Displacement │ Immediate │
 │  (0-4)   │ (1-3)  │ (0-1) │(0-1)│   (0,1,2,4)  │(0,1,2,4,8)│
 └──────────┴────────┴───────┴─────┴──────────────┴───────────┘
   Optional  Required Optional Opt.    Optional      Optional
 
 Minimum: 1 byte (opcode only)
-Maximum: 15 bytes (all components)
-```
+Maximum: 15 bytes (all components)</code></pre>
+</details>
 
 ### **Component Breakdown**
 
@@ -64,8 +67,11 @@ The **REX prefix** (0x40-0x4F) enables 64-bit operations and extended registers.
 
 ### **REX Byte Structure**
 
-```
-┌────┬───┬───┬───┬───┐
+![The REX prefix byte and its W/R/X/B bits](../figures/rex-byte.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌────┬───┬───┬───┬───┐
 │0100│ W │ R │ X │ B │
 └────┴───┴───┴───┴───┘
 Fixed   │   │   │   └─ Extends ModR/M r/m field (R8-R15)
@@ -76,8 +82,8 @@ Fixed   │   │   │   └─ Extends ModR/M r/m field (R8-R15)
 Common REX values:
 0x48 (01001000) = REX.W - 64-bit operation
 0x49 (01001001) = REX.W + REX.B - 64-bit with extended r/m
-0x4C (01001100) = REX.W + REX.R + REX.X - full extensions
-```
+0x4C (01001100) = REX.W + REX.R + REX.X - full extensions</code></pre>
+</details>
 
 ### **When REX is Required**
 
@@ -178,13 +184,16 @@ The **ModR/M** byte specifies operands and addressing modes.
 
 ### **ModR/M Structure**
 
-```
-┌─────────┬─────────┬─────────┐
+![The ModR/M byte: mod, reg, r/m fields](../figures/modrm.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌─────────┬─────────┬─────────┐
 │   Mod   │   Reg   │   R/M   │
 │ (2 bits)│ (3 bits)│ (3 bits)│
 └─────────┴─────────┴─────────┘
-  7   6    5   4   3  2   1   0
-```
+  7   6    5   4   3  2   1   0</code></pre>
+</details>
 
 ### **Mod Field (Addressing Mode)**
 
@@ -282,13 +291,16 @@ Used for complex addressing: `[base + index*scale + disp]`
 
 ### **SIB Structure**
 
-```
-┌─────────┬─────────┬─────────┐
+![The SIB byte: scale, index, base fields](../figures/sib.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌─────────┬─────────┬─────────┐
 │  Scale  │  Index  │  Base   │
 │ (2 bits)│ (3 bits)│ (3 bits)│
 └─────────┴─────────┴─────────┘
-  7   6    5   4   3  2   1   0
-```
+  7   6    5   4   3  2   1   0</code></pre>
+</details>
 
 ### **Scale Field**
 

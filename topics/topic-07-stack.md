@@ -19,8 +19,11 @@ The **stack** is a special region of memory used for:
 
 ### **The Stack Memory Region**
 
-```
-High Memory
+![The call stack: nested frames growing down toward the guard page](../figures/call-stack.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>High Memory
 ┌─────────────────┐
 │     Stack       │ ← Grows DOWNWARD (decreasing addresses)
 │       ↓         │
@@ -35,8 +38,8 @@ High Memory
 ├─────────────────┤
 │   .text section │
 └─────────────────┘
-Low Memory
-```
+Low Memory</code></pre>
+</details>
 
 ### **Key Characteristics**
 
@@ -331,8 +334,11 @@ A **stack frame** is a section of the stack dedicated to a single function call,
 
 ### **Stack Frame Layout**
 
-```
-High Addresses
+![A single stack frame: saved rbp, return address, locals](../figures/stack-frame.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>High Addresses
 ┌──────────────────┐
 │  Caller's Frame  │
 ├──────────────────┤
@@ -346,8 +352,8 @@ High Addresses
 ├──────────────────┤
 │  Local Var 3     │ [rbp - 24]
 └──────────────────┘ ← RSP points here (stack top)
-Low Addresses
-```
+Low Addresses</code></pre>
+</details>
 
 ### **Function Prologue (Setup)**
 

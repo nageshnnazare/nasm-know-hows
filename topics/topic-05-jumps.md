@@ -144,6 +144,8 @@ JL  = Jump if Less
 
 ### **All Conditional Jumps**
 
+![cmp/test set the flags; jcc reads them](../figures/cmp-jcc.svg)
+
 ```
 ┌────────────┬─────────────────────┬────────────────────┐
 │ Mnemonic   │ Meaning             │ Condition          │

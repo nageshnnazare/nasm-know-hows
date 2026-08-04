@@ -30,16 +30,19 @@ syscall(SYS_write, 1, "Hello\n", 6);
 6. **CPU switches** back to user mode
 7. **Program continues** execution
 
-```
-User Space:         Kernel Space:
+![A Linux syscall: user registers, the syscall instruction, and back](../figures/syscall-path.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>User Space:         Kernel Space:
 ┌─────────────┐     ┌──────────────┐
 │ Your Code   │     │              │
 │             │     │   Kernel     │
-│ syscall ────┼────>│   Handler    │
+│ syscall ────┼────&gt;│   Handler    │
 │             │     │              │
-│ <───────────┼─────│  Returns     │
-└─────────────┘     └──────────────┘
-```
+│ &lt;───────────┼─────│  Returns     │
+└─────────────┘     └──────────────┘</code></pre>
+</details>
 
 ### 64-bit Linux Syscall Convention (x86-64)
 

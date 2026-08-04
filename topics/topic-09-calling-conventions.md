@@ -52,13 +52,16 @@ This is the **standard for Linux, macOS, BSD** on 64-bit systems.
 
 **First 6 integer/pointer arguments** go in registers:
 
-```
-┌─────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+![System V AMD64 argument-passing registers](../figures/sysv-args.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>┌─────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
 │  Arg 1  │  Arg 2   │  Arg 3   │  Arg 4   │  Arg 5   │  Arg 6   │
 ├─────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
 │   RDI   │   RSI    │   RDX    │   RCX    │   R8     │   R9     │
-└─────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
-```
+└─────────┴──────────┴──────────┴──────────┴──────────┴──────────┘</code></pre>
+</details>
 
 **Additional arguments** (7th, 8th, ...) go on the **stack** (right-to-left).
 

@@ -69,8 +69,11 @@ section .text
 
 ## Visual Representation
 
-```
-Memory:
+![The effective-address formula](../figures/addressing.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Memory:
 ┌──────────┬─────┐
 │ Address  │ Val │
 ├──────────┼─────┤
@@ -86,8 +89,8 @@ Memory:
 
 mov al, [rbx + 5]
           │
-          └── Go to this address and read the value
-```
+          └── Go to this address and read the value</code></pre>
+</details>
 
 ---
 

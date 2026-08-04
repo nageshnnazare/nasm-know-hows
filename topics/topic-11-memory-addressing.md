@@ -30,6 +30,8 @@ mov rax, [array]        ; RAX = value at array
 
 ## **Part 2: All Addressing Modes**
 
+![The effective-address formula: base + index*scale + disp](../figures/addressing.svg)
+
 ### **1. Immediate (No Memory Access)**
 
 **C Equivalent:**

@@ -20,8 +20,11 @@ The **FLAGS register** (RFLAGS in 64-bit) is a special register that contains in
 
 ### **RFLAGS Structure (64-bit)**
 
-```
-Bit:   63-21  20  19  18-12  11  10   9   8   7   6   5   4   3   2   1   0
+![The RFLAGS status bits that drive conditional branches](../figures/rflags.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Bit:   63-21  20  19  18-12  11  10   9   8   7   6   5   4   3   2   1   0
        ─────  ──  ──  ─────  ──  ──  ──  ──  ──  ──  ──  ──  ──  ──  ──  ──
          │    │   │     │    │   │   │   │   │   │   │   │   │   │   │   │
          │    │   │     │    │   │   │   │   │   │   │   │   │   │   │   └─ CF  Carry
@@ -39,8 +42,8 @@ Bit:   63-21  20  19  18-12  11  10   9   8   7   6   5   4   3   2   1   0
          │    │   │     └────────────────────────────────────────────────── (12-18 - Reserved)
          │    │   └──────────────────────────────────────────────────────── RF  Resume
          │    └──────────────────────────────────────────────────────────── VM  Virtual 8086
-         └───────────────────────────────────────────────────────────────── (21-63 - Reserved/System)
-```
+         └───────────────────────────────────────────────────────────────── (21-63 - Reserved/System)</code></pre>
+</details>
 
 ### **The Six Arithmetic Flags (Most Important)**
 

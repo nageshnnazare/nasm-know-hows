@@ -22,8 +22,11 @@ What's inside each:
 
 ### High-Level Layout
 
-```
-ELF Executable:
+![The layout of an ELF file](../figures/elf-layout.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>ELF Executable:
 ┌────────────────────────────┐ Offset 0
 │     ELF Header (64 bytes)  │ Magic number, type, entry point, etc.
 ├────────────────────────────┤
@@ -51,8 +54,8 @@ ELF Executable:
 Key distinction:
   Sections: logical units (.text, .data, .bss) — for linking/debugging
   Segments: loadable chunks — for execution (kernel only reads these)
-  One segment typically contains multiple sections
-```
+  One segment typically contains multiple sections</code></pre>
+</details>
 
 ### The ELF Header
 
@@ -312,8 +315,11 @@ Steps:
 
 ### Segments vs Sections
 
-```
-Linking (sections):                 Loading (segments):
+![The loader reads segments; the linker reads sections](../figures/elf-load.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>Linking (sections):                 Loading (segments):
 ┌──────────────┐                    ┌──────────────────────┐
 │ .text        │──┐                 │ LOAD Segment 1 (R-X) │
 │ .rodata      │──┤── merged ──→    │  (.text + .rodata)   │
@@ -328,8 +334,8 @@ Linking (sections):                 Loading (segments):
 
 The kernel only reads PROGRAM HEADERS (segments).
 Section headers are optional for execution!
-(You can strip them: strip --strip-all ./program)
-```
+(You can strip them: strip --strip-all ./program)</code></pre>
+</details>
 
 ### Program Header Types
 
@@ -381,8 +387,11 @@ At runtime:
 
 ### The GOT and PLT
 
-```
-GOT (Global Offset Table):
+![Lazy symbol binding through the PLT and GOT](../figures/got-plt.svg)
+
+<details class="ascii-diagram">
+<summary>ASCII diagram</summary>
+<pre><code>GOT (Global Offset Table):
   Array of pointers to external symbols
   Initially points to PLT resolver stub
   After first call: patched to point to actual function
@@ -414,8 +423,8 @@ PLT (Procedure Linkage Table):
                        │   Find printf()  │
                        │   Patch GOT[n]   │
                        │   Jump to printf │
-                       └──────────────────┘
-```
+                       └──────────────────┘</code></pre>
+</details>
 
 ### Calling Shared Library Functions from Assembly
 
