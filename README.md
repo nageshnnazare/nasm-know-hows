@@ -511,19 +511,33 @@ gdb ./program
 By completing this course, you will be able to:
 
 ✅ Write complete assembly programs from scratch
+
 ✅ Understand x86-64 architecture deeply
+
 ✅ Read and understand compiler output
+
 ✅ Optimize code at the lowest level
+
 ✅ Debug assembly with confidence
+
 ✅ Interface assembly with high-level languages
+
 ✅ Work with system calls and OS interfaces
+
 ✅ Apply assembly knowledge to reverse engineering and security
+
 ✅ Understand how malloc/free manage memory (brk, mmap, free lists)
+
 ✅ Know exactly what fork/exec do at the page table level
+
 ✅ Explain virtual memory translation (4-level page tables, TLB)
+
 ✅ Trace the path of a write() from syscall to screen pixels
+
 ✅ Parse and understand ELF binaries (headers, segments, relocations)
+
 ✅ Implement synchronization primitives (spinlocks, mutexes, lock-free structures)
+
 ✅ Understand how the OS context-switches between processes
 
 ---
